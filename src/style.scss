@@ -3,35 +3,51 @@
 
 *, body {
     background-color: #FBFBFB;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 #app {
     @extend .container-fluid;
+    padding: 0 2%;
 }
-
+ 
 .trame {
-    margin-top: 2%;
+    margin-top: 1%;
     width: 100%;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+textarea {
+    resize: none;
+    height: calc(50vh - 60px);
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+
+    .options {
+        display: flex;
+        gap: 1em;
+        justify-content: space-around;
+    }
+}
+
+@media (min-width: 768px) {
+    .box {
+        width: 48%;
+        height: 95vh;
+    }
 
     textarea {
-        resize: none;
-    }
-    
-    .box {
-        display: flex;
-        width: 49%;
-        flex-direction: column;
-        height: 95vh;
-        box-sizing: content-box;
-
-        .options {
-            display: flex;
-            gap: 1em;
-            justify-content: space-around;            
-        }
+        height: calc(100% - 80px);
     }
 }
