@@ -1,0 +1,14 @@
+# Vite
+node_modules/
+dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+build/
+out/

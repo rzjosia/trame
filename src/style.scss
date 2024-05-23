@@ -1,0 +1,37 @@
+@import "normalize.css";
+@import "bootstrap/scss/bootstrap";
+
+*, body {
+    background-color: #FBFBFB;
+}
+
+#app {
+    @extend .container-fluid;
+}
+
+.trame {
+    margin-top: 2%;
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    textarea {
+        resize: none;
+    }
+    
+    .box {
+        display: flex;
+        width: 49%;
+        flex-direction: column;
+        height: 95vh;
+        box-sizing: content-box;
+
+        .options {
+            display: flex;
+            gap: 1em;
+            justify-content: space-around;            
+        }
+    }
+}

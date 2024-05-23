@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trame : technique adventiste Lille</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="trame">
+      <div class="form-group box">
+        <input id="songTitle" type="text" class="form-control mb-2"
+          placeholder="Titre du chant (ex: Viens Esprit du Dieu vivant - JEM 161)">
+        <textarea class="form-control input" id="lyricsInput" rows="100%" placeholder="Structure du chant"></textarea>
+      </div>
+      <div class="form-group box">
+        <div class="options mb-2">
+          <input type="number" name="countLine" id="countLine" class="form-control mr-2" min="1" max="5" value="2"
+            placeholder="Nombre de ligne par diapos">
+          <input type="number" name="lineLength" id="lineLength" class="form-control mr-2" min="20" max="50" value="35"
+            placeholder="Nombre maximum de caractères">
+          <button class="btn btn-primary copy" id="copyLyrics">Copier</button>
+          <button class="btn btn-outline-danger" id="resetLyrics">Effacer</button>
+        </div>
+        <textarea class="form-control output" id="lyricsOutput" rows="100%"
+          placeholder="Format à copier sur ProPresenter"></textarea>
+      </div>
+      </form>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
