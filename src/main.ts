@@ -58,6 +58,7 @@ resetElement.addEventListener(
     titleElement.value = "";
     lyricsInputElement.value = "";
     lyricsOutputElement.value = "";
+    lyricsInputElement.focus();
   },
   false,
 );
