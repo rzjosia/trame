@@ -1,6 +1,6 @@
 # 🎵 🐳 Adventrame 🐳 🎵
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5226443b-0551-4c81-891d-9ed389ca6278/deploy-status)](https://app.netlify.com/sites/adventrame/deploys?branch=)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5226443b-0551-4c81-891d-9ed389ca6278/deploy-status?branch=)](https://app.netlify.com/sites/adventrame/deploys)
 
 ## Introduction
 Adventrame is a simple application that allows you to quickly format song lyrics for easy copying and pasting into the ProPresenter software. This saves time and ensures that the lyrics are in the correct format before using them in ProPresenter.
