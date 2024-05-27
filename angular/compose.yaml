@@ -9,9 +9,6 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-      - /app/dist
-      - /app/.vscode
-      - /app/.angular
 
   caddy:
     image: caddy:2.8-alpine

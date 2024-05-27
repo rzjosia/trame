@@ -29,41 +29,41 @@ dev: up install watch
 
 ## Build docker image
 build:
-	$(DCOMPOSE) build
+	@$(DCOMPOSE) build
 
 ## Start the development environment
 up: down
-	$(DCOMPOSE) up --build -d
+	@$(DCOMPOSE) up --build -d
 
 ## Stop the development environment
 down:
-	$(DCOMPOSE) down --remove-orphans
+	@$(DCOMPOSE) down --remove-orphans
 
 ## Install node packages
 install:
-	$(COMPOSE_EXEC) npm install
+	@$(COMPOSE_EXEC) npm install
 
 ## Watch dev mode
 watch:
-	$(COMPOSE_EXEC) npm run watch
+	@$(COMPOSE_EXEC) npm run watch
 
 ## Watch prod mode
 watch.prod:
-	$(COMPOSE_EXEC) npm run watch:prod
+	@$(COMPOSE_EXEC) npm run watch:prod
 
 ## Run unit tests
 test:
-	$(COMPOSE_EXEC) npm run test
+	@$(COMPOSE_EXEC) npm run test
 
 ## Open docker console
 console:
-	$(COMPOSE_EXEC) /bin/sh
+	@$(COMPOSE_EXEC) /bin/sh
 
 ## Open caddy console container
 console.caddy:
-	$(CADDY_EXEC) /bin/sh
+	@$(CADDY_EXEC) /bin/sh
 
 ## Tail the logs of the running services
 logs:
-	$(DCOMPOSE) logs -f
+	@$(DCOMPOSE) logs -f
 
