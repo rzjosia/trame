@@ -5,14 +5,19 @@ services:
     build:
       context: .
       target: dev
-    user: ${UID:-1000}:${GID:-1000}
     volumes:
       - .:/app
-      - /app/node_modules
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - USER_ID=${UID:-1000}
+      - GROUP_ID=${GID:-1000}
+      - DISPLAY
+      - CHROME_BIN=/usr/bin/chromium-browser
+    ports:
+      - "9876:9876"
 
   caddy:
     image: caddy:2.8-alpine
-    user: ${UID:-1000}:${GID:-1000}
     volumes:
       - ./dist/adventrame/browser:/var/www/html
       - ./Caddyfile:/etc/caddy/Caddyfile
@@ -20,4 +25,3 @@ services:
       - "8085:80"
     depends_on:
       - web
-

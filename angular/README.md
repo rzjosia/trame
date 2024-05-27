@@ -1,27 +1,79 @@
-# Adventrame
+# 🎵 🐳 Adventrame 🐳 🎵
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.1.
+## Introduction
+Adventrame is a simple application that allows you to quickly format song lyrics for easy copying and pasting into the ProPresenter software. This saves time and ensures that the lyrics are in the correct format before using them in ProPresenter.
 
-## Development server
+This project uses Docker and Docker Compose to manage a development environment for the Adventrame application. You can use Makefile commands to simplify interactions with Docker and manage various development tasks.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Prerequisites
 
-## Code scaffolding
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Make](https://www.gnu.org/software/make/)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage
 
-## Build
+To use the Makefile commands, open a terminal in the project's root directory and run the `make` command followed by the desired target.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Usage Examples
 
-## Running unit tests
+1. **Display Help:**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   To display help and see the available targets with their descriptions:
 
-## Running end-to-end tests
+    ```sh
+    make help
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. **Start Development Mode:**
 
-## Further help
+   To build, install, and run in development mode:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+    ```sh
+    make dev
+    ```
+
+3. **Build the Docker Image:**
+
+   To build the Docker image:
+
+    ```sh
+    make build
+    ```
+
+4. **Start Docker Services:**
+
+   To start the Docker services in detached mode (without showing logs):
+
+    ```sh
+    make up
+    ```
+
+5. **Stop Docker Services:**
+
+   To stop the Docker services and remove orphaned containers:
+
+    ```sh
+    make down
+    ```
+
+6. **Open a Shell Session in the Angular Container:**
+
+   To open a shell session in the Angular container:
+
+    ```sh
+    make sh
+    ```
+   
+## Notes
+
+- Ensure that Docker and Docker Compose are properly installed and configured on your machine.
+- Commands should be run from the root directory of the project where the Makefile is located.
+
+## Authors
+
+- Josia RAZAFINJATOVO
+
+## License
+
+- License information, if applicable.

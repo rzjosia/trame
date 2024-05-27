@@ -1,69 +1,63 @@
-COLOR_RESET   = \033[0m
-COLOR_INFO    = \033[32m
-COLOR_COMMENT = \033[33m
-PROJECT_NAME = adventrame
-DCOMPOSE = docker-compose
-COMPOSE_EXEC = $(DCOMPOSE) exec -u ${UID}:${GID} web
-CADDY_EXEC = $(DCOMPOSE) exec -u ${UID}:${GID} caddy
+# Executables (local)
+COMPOSE = docker-compose
 DOCKER = docker
 
-.PHONY: build up stop install test watch watch.prod console.caddy console logs
+# Variables
+CURRENT_ID := $(shell id -u):$(shell id -g)
 
-help: ## Show this help
-	@printf "${COLOR_COMMENT}Usage:${COLOR_RESET}\n"
+# Executables
+COMPOSE_EXEC = $(COMPOSE) exec -u $(CURRENT_ID) web
+CADDY_EXEC = $(COMPOSE) exec -u $(CURRENT_ID) caddy
+
+# Misc
+.DEFAULT_GOAL := help
+.PHONY: dev build up down sh bash sh.caddy logs install watch watch.prod test clean
+
+## —— 🎵 🐳 Adventrame Docker Makefile 🐳 🎵 ———————————————————————————————————
+help: ## Outputs this help screen
+	@printf "\033[33mUsage:\033[0m\n"
 	@printf " make [target]\n\n"
-	@printf "${COLOR_COMMENT}Available targets:${COLOR_RESET}\n"
-	@awk '/^[a-zA-Z\-_0-9\.@]+:/ { \
-		helpMessage = match(lastLine, /^## (.*)/); \
-		if (helpMessage) { \
-			helpCommand = substr($$1, 0, index($$1, ":")); \
-			helpMessage = substr(lastLine, RSTART + 3, RLENGTH); \
-			printf " ${COLOR_INFO}%-26s${COLOR_RESET} %s\n", helpCommand, helpMessage; \
-		} \
-	} \
-	{ lastLine = $$0 }' $(MAKEFILE_LIST)
+	@printf "\033[33mAvailable targets:\033[0m\n\n"
+	@grep -E '(^[a-zA-Z0-9\./_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
+## —— Docker 🐳 ————————————————————————————————————————————————————————————————
+dev: up install watch ## Build, install and run dev mode
 
-## Build, install and run dev mode
-dev: up install watch
+build: ## Build  the Docker image
+	@$(COMPOSE) build
 
-## Build docker image
-build:
-	@$(DCOMPOSE) build
+up: down ## Start the docker hub in detached mode (no logs)
+	@$(COMPOSE) up --build -d
 
-## Start the development environment
-up: down
-	@$(DCOMPOSE) up --build -d
+down: ## Stop the docker hub
+	@$(COMPOSE) down --remove-orphans
 
-## Stop the development environment
-down:
-	@$(DCOMPOSE) down --remove-orphans
-
-## Install node packages
-install:
-	@$(COMPOSE_EXEC) npm install
-
-## Watch dev mode
-watch:
-	@$(COMPOSE_EXEC) npm run watch
-
-## Watch prod mode
-watch.prod:
-	@$(COMPOSE_EXEC) npm run watch:prod
-
-## Run unit tests
-test:
-	@$(COMPOSE_EXEC) npm run test
-
-## Open docker console
-console:
+sh: ## Connect to the Angular
 	@$(COMPOSE_EXEC) /bin/sh
 
-## Open caddy console container
-console.caddy:
+bash: ## Connect to the Angular via bash so up and down arrows go to previous commands
+	@$(COMPOSE_EXEC) /bin/bash
+
+sh.caddy: ## Connect to the Caddy container
 	@$(CADDY_EXEC) /bin/sh
 
-## Tail the logs of the running services
-logs:
-	@$(DCOMPOSE) logs -f
+logs: ## Tail the logs of the running services
+	@$(COMPOSE) logs -f
 
+## —— Npm 🧙 ———————————————————————————————————————————————————————————————————
+install: ## Install node packages
+	@$(COMPOSE_EXEC) npm install
+
+watch: ## Watch dev mode
+	@$(COMPOSE_EXEC) npm run watch
+
+watch.prod: ## Watch prod mode
+	@$(COMPOSE_EXEC) npm run watch:prod
+
+test: ## Run unit tests pass the parameter "c=" to add options, example: make test c='--browsers ChromiumHeadless'
+	@$(eval c ?=)
+	@$(COMPOSE_EXEC) npm run test -- $(c)
+
+clean: ## Clean
+	@rm -rf ./node_modules
+	@rm -rf ./dist
