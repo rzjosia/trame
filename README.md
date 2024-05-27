@@ -1,53 +1,79 @@
-# Formateur de Paroles pour ProPresenter
+# 🎵 🐳 Adventrame 🐳 🎵
 
+## Introduction
+Adventrame is a simple application that allows you to quickly format song lyrics for easy copying and pasting into the ProPresenter software. This saves time and ensures that the lyrics are in the correct format before using them in ProPresenter.
 
-## Description
-Ce projet est une application simple qui permet de formater rapidement les paroles de chansons pour les copier et les coller facilement dans le logiciel ProPresenter. Cela permet de gagner du temps et d'assurer que les paroles sont dans le format correct avant de les utiliser dans ProPresenter.
+This project uses Docker and Docker Compose to manage a development environment for the Adventrame application. You can use Makefile commands to simplify interactions with Docker and manage various development tasks.
 
-## Installation
+## Prerequisites
 
-### Prérequis
- * Docker
- * Docker compose
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Make](https://www.gnu.org/software/make/)
 
-### Etapes
-1. Clonez ce dépôt sur votre machine locale :
-   ```bash
-   git clone git@github.com:rzjosia/trame.git
-   ```
-   ou
-   ```bash
-   git clone https://github.com/rzjosia/trame.git
-   ```
+## Usage
 
-2. Accéder au repertoire du projet :
-   ```bash
-   cd trame
-   ```
+To use the Makefile commands, open a terminal in the project's root directory and run the `make` command followed by the desired target.
 
-3. Démarrez les services Docker :
-   ```bash
-   docker compose up --build -d
-   ```
+### Usage Examples
 
-4. Si vous n'avez plus besoin de l'application vous pouvez arrêter les services docker :
-    ```bash
-   docker compose down --remove-orphans
-   ```
+1. **Display Help:**
 
-### Commandes utiles
+   To display help and see the available targets with their descriptions:
 
-* Formater le code avec prettier :
-  ```bash
-  docker compose exec node npm run format
-  ```
+    ```sh
+    make help
+    ```
 
-### Utilisation
-1. Accédez à l'application dans votre navigateur [http://localhost:8084](http://localhost:8084)
+2. **Start Development Mode:**
+
+   To build, install, and run in development mode:
+
+    ```sh
+    make dev
+    ```
+
+3. **Build the Docker Image:**
+
+   To build the Docker image:
+
+    ```sh
+    make build
+    ```
+
+4. **Start Docker Services:**
+
+   To start the Docker services in detached mode (without showing logs):
+
+    ```sh
+    make up
+    ```
+
+5. **Stop Docker Services:**
+
+   To stop the Docker services and remove orphaned containers:
+
+    ```sh
+    make down
+    ```
+
+6. **Open a Shell Session in the Angular Container:**
+
+   To open a shell session in the Angular container:
+
+    ```sh
+    make sh
+    ```
    
-2. Utilisez l'interface pour copier-coller les paroles ou saisissez directement les paroles dans le champ de texte.
+## Notes
 
-3. Prévisualisez les paroles formatées en temps réel.
+- Ensure that Docker and Docker Compose are properly installed and configured on your machine.
+- Commands should be run from the root directory of the project where the Makefile is located.
 
-4. Copiez les paroles formatées et collez-les dans ProPresenter.
+## Authors
 
+- Josia RAZAFINJATOVO
+
+## License
+
+- License information, if applicable.

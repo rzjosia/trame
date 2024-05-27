@@ -59,5 +59,6 @@ test: ## Run unit tests pass the parameter "c=" to add options, example: make te
 	@$(COMPOSE_EXEC) npm run test -- $(c)
 
 clean: ## Clean
+	@$(COMPOSE) down --rmi all --volumes --remove-orphans
 	@rm -rf ./node_modules
 	@rm -rf ./dist

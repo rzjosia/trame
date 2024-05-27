@@ -1,25 +1,40 @@
 {
-  "name": "trame",
-  "private": true,
+  "name": "adventrame",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite --port 8000 --host",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "format": "prettier --write \"src/**/*.ts\""
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "watch:prod": "ng build --watch --configuration production",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular-eslint/schematics": "^1.2.0",
+    "@angular/animations": "^18.0.0",
+    "@angular/common": "^18.0.0",
+    "@angular/compiler": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "@angular/forms": "^18.0.0",
+    "@angular/platform-browser": "^18.0.0",
+    "@angular/platform-browser-dynamic": "^18.0.0",
+    "@angular/router": "^18.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
-    "prettier": "3.2.4",
-    "sass": "^1.71.1",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8"
-  },
-  "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "@viz-js/viz": "^3.4.0",
-    "bootstrap": "^5.3.3",
-    "normalize.css": "^8.0.1",
-    "pixi.js": "^7.3.3"
+    "@angular-devkit/build-angular": "^18.0.1",
+    "@angular/cli": "^18.0.1",
+    "@angular/compiler-cli": "^18.0.0",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.4.2"
   }
 }

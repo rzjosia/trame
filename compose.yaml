@@ -1,21 +1,27 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  node:
-    image: node:lts-alpine3.19
-    restart: always
+  web:
+    build:
+      context: .
+      target: dev
     volumes:
-      - ./:/app
-    working_dir: /app
-    user: "1000"
-    command: 
-      - /bin/sh
-      - -c
-      - |
-        npm install
-        npm run dev -- --port 80 --host
-    expose:
-      - 80
+      - .:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - USER_ID=${UID:-1000}
+      - GROUP_ID=${GID:-1000}
+      - DISPLAY
+      - CHROME_BIN=/usr/bin/chromium-browser
     ports:
-      - "8084:80"
-    tty: true
+      - "9876:9876"
+
+  caddy:
+    image: caddy:2.8-alpine
+    volumes:
+      - ./dist/adventrame/browser:/var/www/html
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "8085:80"
+    depends_on:
+      - web
