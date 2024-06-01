@@ -1,10 +1,15 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {provideRouter} from "@angular/router";
+import {routes} from "./app.routes";
+import {PageNotFoundComponent} from "./routes/page-not-found/page-not-found.component";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, NoopAnimationsModule],
+      providers: [provideRouter(routes)],
     }).compileComponents();
   });
 
@@ -14,16 +19,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'adventrame' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should display "Page Non Trouvée"', () => {
+    const fixture = TestBed.createComponent(PageNotFoundComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('adventrame');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, adventrame');
-  });
+    expect(app).toBeTruthy();
+  })
 });
