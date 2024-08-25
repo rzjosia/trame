@@ -39,7 +39,11 @@ export function format(
   return `Title: ${title}\n\n[Introduction]\n${title}\n\n${formated}\n\n[Conclusion]\n\n`;
 }
 
-function wrapText(text: string, chunkSize = 28): string[] {
+export function wrapText(text: string, chunkSize = 35): string[] {
+  if (chunkSize < 20) {
+    throw new Error(`Chunk size must be at least 20. Given chuck size ${chunkSize}`);
+  }
+  
   const regex = new RegExp(`.{1,${chunkSize}}(\\s|$)`, "g");
   return (
     text

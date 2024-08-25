@@ -1,5 +1,5 @@
-import "./style.scss";
-import { format } from "./trame";
+import "./styles/global.scss";
+import { format } from "./features/trame";
 
 const lyricsInputElement = document.querySelector(
   "#lyricsInput",
