@@ -36,7 +36,7 @@ export function format(
     title = firstLineMatch[0];
   }
 
-  return `[Introduction]\n${title}\n\n${formated}\n\n[Conclusion]\n\n`;
+  return `Title: ${title}\n\n[Introduction]\n${title}\n\n${formated}\n\n[Conclusion]\n\n`;
 }
 
 function wrapText(text: string, chunkSize = 28): string[] {
