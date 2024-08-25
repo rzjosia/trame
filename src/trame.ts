@@ -3,7 +3,7 @@ export function format(
   lyrics: string,
   splitLine = 2,
   lineLength = 35,
-) {
+): string {
   if ("" === title.trim() && "" === lyrics.trim()) {
     return "";
   }
