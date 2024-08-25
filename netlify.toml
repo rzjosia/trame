@@ -1,0 +1,11 @@
+[build]
+  # Set the build command
+  command = "npm test && npm run build"
+  
+  # Set the directory to publish
+  publish = "dist"
+
+# Optional: Configure the development server
+[dev]
+  command = "npm run dev"
+  port = 8000
