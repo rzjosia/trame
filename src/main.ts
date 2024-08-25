@@ -1,25 +1,31 @@
-import "./style.scss";
-import { format } from "./trame";
+import "./styles/global.scss";
+import { format } from "./features/trame";
 
 const lyricsInputElement = document.querySelector(
   "#lyricsInput",
 ) as HTMLTextAreaElement;
+
 const lyricsOutputElement = document.querySelector(
   "#lyricsOutput",
 ) as HTMLTextAreaElement;
+
 const countLineElement = document.querySelector(
   "#countLine",
 ) as HTMLInputElement;
+
 const lineLengthElement = document.querySelector(
   "#lineLength",
 ) as HTMLInputElement;
+
 const copyElement = document.querySelector("#copyLyrics") as HTMLButtonElement;
+
 const resetElement = document.querySelector(
   "#resetLyrics",
 ) as HTMLButtonElement;
+
 const titleElement = document.querySelector("#songTitle") as HTMLInputElement;
 
-const updateLyricsOutput = function (e: Event) {
+const updateLyricsOutput = (e: Event) => {
   e.preventDefault();
   const title = titleElement.value;
   const lyrics = lyricsInputElement.value;
@@ -42,7 +48,7 @@ elements.forEach((element) => {
 
 copyElement.addEventListener(
   "click",
-  async function (e) {
+  async (e) => {
     e.preventDefault();
     lyricsOutputElement.select();
     lyricsOutputElement.setSelectionRange(0, 99999);
@@ -53,7 +59,7 @@ copyElement.addEventListener(
 
 resetElement.addEventListener(
   "click",
-  function (e) {
+  (e) => {
     e.preventDefault();
     titleElement.value = "";
     lyricsInputElement.value = "";

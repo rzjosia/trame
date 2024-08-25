@@ -3,7 +3,7 @@ export function format(
   lyrics: string,
   splitLine = 2,
   lineLength = 35,
-) {
+): string {
   if ("" === title.trim() && "" === lyrics.trim()) {
     return "";
   }
@@ -36,10 +36,14 @@ export function format(
     title = firstLineMatch[0];
   }
 
-  return `[Introduction]\n${title}\n\n${formated}\n\n[Conclusion]\n\n`;
+  return `Title: ${title}\n\n[Introduction]\n${title}\n\n${formated}\n\n[Conclusion]\n\n`;
 }
 
-function wrapText(text: string, chunkSize = 28): string[] {
+export function wrapText(text: string, chunkSize = 35): string[] {
+  if (chunkSize < 20) {
+    throw new Error(`Chunk size must be at least 20. Given chuck size ${chunkSize}`);
+  }
+  
   const regex = new RegExp(`.{1,${chunkSize}}(\\s|$)`, "g");
   return (
     text
