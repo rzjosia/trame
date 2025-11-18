@@ -1,70 +1,59 @@
 import "./styles/global.scss";
 import { format } from "./features/trame";
 
-const lyricsInputElement = document.querySelector(
-  "#lyricsInput",
-) as HTMLTextAreaElement;
-
-const lyricsOutputElement = document.querySelector(
-  "#lyricsOutput",
-) as HTMLTextAreaElement;
-
-const countLineElement = document.querySelector(
-  "#countLine",
-) as HTMLInputElement;
-
-const lineLengthElement = document.querySelector(
-  "#lineLength",
-) as HTMLInputElement;
-
-const copyElement = document.querySelector("#copyLyrics") as HTMLButtonElement;
-
-const resetElement = document.querySelector(
-  "#resetLyrics",
-) as HTMLButtonElement;
-
-const titleElement = document.querySelector("#songTitle") as HTMLInputElement;
-
-const updateLyricsOutput = (e: Event) => {
-  e.preventDefault();
-  const title = titleElement.value;
-  const lyrics = lyricsInputElement.value;
-  const countLine = countLineElement.valueAsNumber;
-  const lineLength = lineLengthElement.valueAsNumber;
-  lyricsOutputElement.value = format(title, lyrics, countLine, lineLength);
+// DOM Elements
+const elements = {
+  title: document.querySelector("#songTitle") as HTMLInputElement,
+  lyricsInput: document.querySelector("#lyricsInput") as HTMLTextAreaElement,
+  lyricsOutput: document.querySelector("#lyricsOutput") as HTMLTextAreaElement,
+  countLine: document.querySelector("#countLine") as HTMLInputElement,
+  lineLength: document.querySelector("#lineLength") as HTMLInputElement,
+  copyButton: document.querySelector("#copyLyrics") as HTMLButtonElement,
+  resetButton: document.querySelector("#resetLyrics") as HTMLButtonElement,
 };
 
-const elements = [
-  titleElement,
-  lyricsInputElement,
-  countLineElement,
-  lineLengthElement,
+// Event Handlers
+const handleLyricsUpdate = (e: Event): void => {
+  e.preventDefault();
+  const { title, lyricsInput, lyricsOutput, countLine, lineLength } = elements;
+
+  lyricsOutput.value = format(title.value, lyricsInput.value, {
+    splitLine: countLine.valueAsNumber,
+    lineLength: lineLength.valueAsNumber,
+  });
+};
+
+const handleCopy = async (e: Event): Promise<void> => {
+  e.preventDefault();
+  const { lyricsOutput } = elements;
+
+  lyricsOutput.select();
+  lyricsOutput.setSelectionRange(0, 99999);
+  await navigator.clipboard.writeText(lyricsOutput.value);
+};
+
+const handleReset = (e: Event): void => {
+  e.preventDefault();
+  const { title, lyricsInput, lyricsOutput } = elements;
+
+  title.value = "";
+  lyricsInput.value = "";
+  lyricsOutput.value = "";
+  lyricsInput.focus();
+};
+
+// Event Listeners
+const inputElements = [
+  elements.title,
+  elements.lyricsInput,
+  elements.countLine,
+  elements.lineLength,
 ];
 
-elements.forEach((element) => {
-  element.addEventListener("keyup", updateLyricsOutput, false);
-  element.addEventListener("change", updateLyricsOutput, false);
+inputElements.forEach((element) => {
+  element.addEventListener("keyup", handleLyricsUpdate);
+  element.addEventListener("change", handleLyricsUpdate);
 });
 
-copyElement.addEventListener(
-  "click",
-  async (e) => {
-    e.preventDefault();
-    lyricsOutputElement.select();
-    lyricsOutputElement.setSelectionRange(0, 99999);
-    await navigator.clipboard.writeText(lyricsOutputElement.value);
-  },
-  false,
-);
-
-resetElement.addEventListener(
-  "click",
-  (e) => {
-    e.preventDefault();
-    titleElement.value = "";
-    lyricsInputElement.value = "";
-    lyricsOutputElement.value = "";
-    lyricsInputElement.focus();
-  },
-  false,
-);
+elements.copyButton.addEventListener("click", handleCopy);
+elements.resetButton.addEventListener("click", handleReset);
