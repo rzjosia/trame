@@ -25,7 +25,7 @@ describe("format function", () => {
     const title = "Wrapped Song";
     const lyrics =
       "This is a very long line that should be wrapped after a certain length";
-    const result = format(title, lyrics, 2, 20);
+    const result = format(title, lyrics, { splitLine: 2, lineLength: 20 });
     const expected = `Title: Wrapped Song\n\n[Introduction]\nWrapped Song\n\nThis is a very long\nline that should be\n\nwrapped after a\ncertain length\n\n[Conclusion]\n\n`;
     expect(result).toBe(expected);
   });
@@ -56,44 +56,52 @@ describe("format function", () => {
   });
 });
 
-describe('wrapText', () => {
-  it('should split text into chunks of default size', () => {
-    const text = 'This is a long text that needs to be wrapped into chunks of specified size.';
+describe("wrapText", () => {
+  it("should split text into chunks of default size", () => {
+    const text =
+      "This is a long text that needs to be wrapped into chunks of specified size.";
     const result = wrapText(text);
     expect(result).toEqual([
-      'This is a long text that needs to',
-      'be wrapped into chunks of specified',
-      'size.'
+      "This is a long text that needs to",
+      "be wrapped into chunks of specified",
+      "size.",
     ]);
   });
 
-  it('should return an error when text into chunks of specified size is less than 20', () => {
-    const text = 'This text will be wrapped into smaller chunks.';
-    expect(() => wrapText(text, 1)).toThrow(`Chunk size must be at least 20. Given chuck size 1`);
-    expect(() => wrapText(text, 5)).toThrow(`Chunk size must be at least 20. Given chuck size 5`);
-    expect(() => wrapText(text, 10)).toThrow(`Chunk size must be at least 20. Given chuck size 10`);
-    expect(() => wrapText(text, 15)).toThrow(`Chunk size must be at least 20. Given chuck size 15`);
-    expect(() => wrapText(text, 19)).toThrow(`Chunk size must be at least 20. Given chuck size 19`);
+  it("should return an error when text into chunks of specified size is less than 20", () => {
+    const text = "This text will be wrapped into smaller chunks.";
+    expect(() => wrapText(text, 1)).toThrow(
+      `Chunk size must be at least 20. Given chunk size 1`,
+    );
+    expect(() => wrapText(text, 5)).toThrow(
+      `Chunk size must be at least 20. Given chunk size 5`,
+    );
+    expect(() => wrapText(text, 10)).toThrow(
+      `Chunk size must be at least 20. Given chunk size 10`,
+    );
+    expect(() => wrapText(text, 15)).toThrow(
+      `Chunk size must be at least 20. Given chunk size 15`,
+    );
+    expect(() => wrapText(text, 19)).toThrow(
+      `Chunk size must be at least 20. Given chunk size 19`,
+    );
   });
 
-  it('should handle text shorter than chunk size', () => {
-    const text = 'Short text';
+  it("should handle text shorter than chunk size", () => {
+    const text = "Short text";
     const result = wrapText(text);
-    expect(result).toEqual(['Short text']);
+    expect(result).toEqual(["Short text"]);
   });
 
-  it('should handle empty text', () => {
-    const text = '';
+  it("should handle empty text", () => {
+    const text = "";
     const result = wrapText(text);
     expect(result).toEqual([]);
   });
-  
-  it('should handle text with trailing spaces', () => {
-    const text = 'Trailing spaces should be handled properly. ';
+
+  it("should handle text with trailing spaces", () => {
+    const text = "Trailing spaces should be handled properly. ";
     const result = wrapText(text);
-    expect(result).toEqual([
-      'Trailing spaces should be handled',
-      'properly.'
-    ]);
+    expect(result).toEqual(["Trailing spaces should be handled", "properly."]);
   });
 });

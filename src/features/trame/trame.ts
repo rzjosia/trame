@@ -1,49 +1,52 @@
+// Constants for section names and formatting
+const SECTIONS = {
+  VERSE: "Couplet",
+  CHORUS: "Refrain",
+  BRIDGE: "Pont",
+  PRE_CHORUS: "Pré-refrain",
+  OUTRO: "Outro",
+  VAMP: "Vamp",
+} as const;
+
+const SECTION_NAMES = Object.values(SECTIONS).join("|");
+
+// Regex patterns
+const PATTERNS = {
+  verse: /Strophe/gim,
+  numericVerse: /^(\d+)[.-\s]*(.+)/gim,
+  section: new RegExp(`^(${SECTION_NAMES})(\\s*\\d*)\\n`, "gim"),
+  sectionMatcher: `\\[(${SECTION_NAMES})\\s*\\d*\\]\\n+`,
+} as const;
+
+interface FormatOptions {
+  splitLine?: number;
+  lineLength?: number;
+}
+
 export function format(
   title: string,
   lyrics: string,
-  splitLine = 2,
-  lineLength = 35,
+  options: FormatOptions = {},
 ): string {
-  if ("" === title.trim() && "" === lyrics.trim()) {
+  const { splitLine = 2, lineLength = 35 } = options;
+
+  if (isEmptyContent(title, lyrics)) {
     return "";
   }
 
-  const verseRegex = /Strophe/gim;
-  const numericVerseRegex = /^(\d+)[.-\s]*(.+)/gim;
-  const sections = ["Couplet", "Refrain", "Pont", "Pré-refrain"].join("|");
-  const sectionRegex = new RegExp(`^(${sections})(\\s*\\d*)\\n`, "gim");
-  const sectionMatcher = `\\[(${sections})\\s*\\d*\\]\\n+`;
-  const matcher = new RegExp(
-    `(${sectionMatcher})?((.+\\n+)(?<!(${sectionMatcher}))){1,${splitLine}}`,
-    "gim",
-  );
+  const formattedLyrics = formatLyrics(lyrics, splitLine, lineLength);
+  const finalTitle = title || extractTitleFromLyrics(formattedLyrics);
 
-  const formated =
-    wrapText(lyrics, lineLength)
-      .join("\n")
-      .replace(numericVerseRegex, "Couplet $1\n$2\n")
-      .replace(verseRegex, "Couplet")
-      .replace(sectionRegex, "[$1$2]\n")
-      .concat("\n")
-      .replace(/\n+/gi, "\n")
-      .match(matcher)
-      ?.join("\n")
-      .trim() ?? "";
-
-  if ("" === title) {
-    const firstLineRegex = new RegExp(`^(?!${sectionMatcher}).+`, "mi");
-    const firstLineMatch = formated.match(firstLineRegex) || [""];
-    title = firstLineMatch[0];
-  }
-
-  return `Title: ${title}\n\n[Introduction]\n${title}\n\n${formated}\n\n[Conclusion]\n\n`;
+  return buildFinalOutput(finalTitle, formattedLyrics);
 }
 
 export function wrapText(text: string, chunkSize = 35): string[] {
   if (chunkSize < 20) {
-    throw new Error(`Chunk size must be at least 20. Given chuck size ${chunkSize}`);
+    throw new Error(
+      `Chunk size must be at least 20. Given chunk size ${chunkSize}`,
+    );
   }
-  
+
   const regex = new RegExp(`.{1,${chunkSize}}(\\s|$)`, "g");
   return (
     text
@@ -51,4 +54,42 @@ export function wrapText(text: string, chunkSize = 35): string[] {
       .match(regex)
       ?.map((subText) => subText.trim()) || []
   );
+}
+
+function isEmptyContent(title: string, lyrics: string): boolean {
+  return title.trim() === "" && lyrics.trim() === "";
+}
+
+function formatLyrics(
+  lyrics: string,
+  splitLine: number,
+  lineLength: number,
+): string {
+  const matcher = new RegExp(
+    `(${PATTERNS.sectionMatcher})?((.+\\n+)(?<!(${PATTERNS.sectionMatcher}))){1,${splitLine}}`,
+    "gim",
+  );
+
+  return (
+    wrapText(lyrics, lineLength)
+      .join("\n")
+      .replace(PATTERNS.numericVerse, `${SECTIONS.VERSE} $1\n$2\n`)
+      .replace(PATTERNS.verse, SECTIONS.VERSE)
+      .replace(PATTERNS.section, "[$1$2]\n")
+      .concat("\n")
+      .replace(/\n+/gi, "\n")
+      .match(matcher)
+      ?.join("\n")
+      .trim() ?? ""
+  );
+}
+
+function extractTitleFromLyrics(formattedLyrics: string): string {
+  const firstLineRegex = new RegExp(`^(?!${PATTERNS.sectionMatcher}).+`, "mi");
+  const firstLineMatch = formattedLyrics.match(firstLineRegex) || [""];
+  return firstLineMatch[0];
+}
+
+function buildFinalOutput(title: string, formattedLyrics: string): string {
+  return `Title: ${title}\n\n[Introduction]\n${title}\n\n${formattedLyrics}\n\n[Conclusion]\n\n`;
 }

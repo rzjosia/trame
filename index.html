@@ -5,33 +5,66 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Outil de formatage de paroles de chants pour ProPresenter. Permet de structurer facilement les paroles avec un découpage automatique des lignes et des sections (couplets, refrains, etc.)." />
+  <meta name="author" content="Technique Adventiste Lille" />
+  <meta name="keywords" content="ProPresenter, formatage, chants, paroles, église, adventiste, Lille" />
+  <meta property="og:title" content="Trame : technique adventiste Lille" />
+  <meta property="og:description"
+    content="Outil de formatage de paroles de chants pour ProPresenter. Permet de structurer facilement les paroles avec un découpage automatique des lignes et des sections (couplets, refrains, etc.)." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Trame : technique adventiste Lille" />
+  <meta name="twitter:description"
+    content="Outil de formatage de paroles de chants pour ProPresenter. Permet de structurer facilement les paroles avec un découpage automatique des lignes et des sections." />
   <title>Trame : technique adventiste Lille</title>
 </head>
 
 <body>
+  <div class="text-primary  text-center my-3" style="letter-spacing:1px;">
+  Saisissez vos paroles ci-dessous :<br/>
+  l'outil va découper automatiquement chaque couplet, refrain ou section pour un formatage compatible avec ProPresenter.
+</div>
+
+
   <div id="app" class="trame">
     <div class="trame">
       <div class="form-group box">
         <input id="songTitle" type="text" class="form-control mb-2"
-          placeholder="Titre du chant (ex: Viens Esprit du Dieu vivant - JEM 161)">
-        <textarea class="form-control input" id="lyricsInput" rows="100%" placeholder="Structure du chant" autofocus></textarea>
+          placeholder="Titre du chant (ex: Viens Esprit du Dieu vivant - JEM 161)" />
+        <textarea class="form-control input" id="lyricsInput" rows="100%" placeholder="Structure du chant"
+          autofocus></textarea>
       </div>
+
       <div class="form-group box">
         <div class="options mb-2">
           <input type="number" name="countLine" id="countLine" class="form-control mr-2" min="1" max="5" value="2"
-            placeholder="Nombre de ligne par diapos">
-          <input type="number" name="lineLength" id="lineLength" class="form-control mr-2" min="20" max="50" value="35"
-            placeholder="Nombre maximum de caractères">
+            placeholder="Nombre de ligne par diapos" />
+          <input type="number" name="lineLength" id="lineLength" class="form-control mr-2" min="20" max="50" value="100"
+            placeholder="Nombre maximum de caractères" />
           <button class="btn btn-primary copy" id="copyLyrics">Copier</button>
-          <button class="btn btn-outline-danger" id="resetLyrics">Effacer</button>
+          <button class="btn btn-outline-danger" id="resetLyrics">
+            Effacer
+          </button>
         </div>
         <textarea class="form-control output" id="lyricsOutput" rows="100%"
           placeholder="Format à copier sur ProPresenter"></textarea>
       </div>
-      </form>
     </div>
+  </div>
 
-    <script type="module" src="/src/main.ts"></script>
+  <footer class="bg-primary text-white py-3 shadow-sm">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+      <span>&copy; 2025 Trame Adventiste – Lille</span>
+      <div>
+        <a href="mailto:rzjosia@gmail.com" class="text-warning text-decoration-none mx-2">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
