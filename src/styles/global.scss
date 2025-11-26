@@ -10,9 +10,6 @@
 #app {
     @extend .container-fluid;
     padding: 0 2%;
-}
- 
-.trame {
     margin-top: 1%;
     width: 100%;
     display: flex;
@@ -48,5 +45,11 @@ textarea {
 
     textarea {
         height: calc(100% - 80px);
+    }
+}
+
+@media (max-width: 768px) {
+    footer {
+        margin-top: 20px;
     }
 }
